@@ -3,80 +3,15 @@
 # Update hosts file
 echo "[TASK 1] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
-#172.42.42.100 kmaster.example.com kmaster
-#172.42.42.101 kworker1.example.com kworker1
-#172.42.42.102 kworker2.example.com kworker2
+172.42.42.100 kmaster.example.com kmaster
+172.42.42.101 kworker1.example.com kworker1
+172.42.42.102 kworker2.example.com kworker2
 EOF
 
 # Install docker from Docker-ce repository
 echo "[TASK 2] Install docker container engine"
-
-#cat >>/etc/yum.repos.d/docker-ce.repo<<EOF
-#[docker-ce-stable]
-#name=Docker CE Stable - $basearch
-#baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/stable
-#enabled=1
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-stable-debuginfo]
-#name=Docker CE Stable - Debuginfo $basearch
-#baseurl=https://download.docker.com/linux/fedora/$releasever/debug-$basearch/stable
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-stable-source]
-#name=Docker CE Stable - Sources
-#baseurl=https://download.docker.com/linux/fedora/$releasever/source/stable
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-test]
-#name=Docker CE Test - $basearch
-#baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/test
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-test-debuginfo]
-#name=Docker CE Test - Debuginfo $basearch
-#baseurl=https://download.docker.com/linux/fedora/$releasever/debug-$basearch/test
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-test-source]
-#name=Docker CE Test - Sources
-#baseurl=https://download.docker.com/linux/fedora/$releasever/source/test
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-nightly]
-#name=Docker CE Nightly - $basearch
-#baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/nightly
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-nightly-debuginfo]
-#name=Docker CE Nightly - Debuginfo $basearch
-#baseurl=https://download.docker.com/linux/fedora/$releasever/debug-$basearch/nightly
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#
-#[docker-ce-nightly-source]
-#name=Docker CE Nightly - Sources
-#baseurl=https://download.docker.com/linux/fedora/$releasever/source/nightly
-#enabled=0
-#gpgcheck=1
-#gpgkey=https://download.docker.com/linux/fedora/gpg
-#EOF
-#
 yum install -y -q yum-utils device-mapper-persistent-data lvm2 > /dev/null 2>&1
+yum-config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo > /dev/null 2>&1
 yum install -y -q docker-ce >/dev/null 2>&1
 
 # Enable docker service
@@ -109,20 +44,20 @@ swapoff -a
 
 # Add yum repo file for Kubernetes
 echo "[TASK 8] Add yum repo file for kubernetes"
-#cat >>/etc/yum.repos.d/kubernetes.repo<<EOF
-#[kubernetes]
-#name=Kubernetes
-#baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-$basearch
-#enabled=1
-#gpgcheck=1
-#repo_gpgcheck=1
-#gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-#exclude=kubelet kubeadm kubectl
-#EOF
-#
+cat >>/etc/yum.repos.d/kubernetes.repo<<EOF
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-$basearch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kubelet kubeadm kubectl
+EOF
+
 # Install Kubernetes
 echo "[TASK 9] Install Kubernetes (kubeadm, kubelet and kubectl)"
-yum install -y -q kubeadm kubelet kubectl  >/dev/null 2>&1
+yum install -y -q kubeadm kubelet kubectl >/dev/null 2>&1
 
 # Start and Enable kubelet service
 echo "[TASK 10] Enable and start kubelet service"

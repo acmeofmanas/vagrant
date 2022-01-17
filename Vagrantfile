@@ -4,8 +4,8 @@
 Vagrant.configure("2") do |config|
 
 config.vm.provision "shell", path: "bootstrap.sh"
-config.vm.provision "file", source: "docker-ce.repo", destination: "/etc/yum.repos.d/docker-ce.repo"
-config.vm.provision "file", source: "kubernetes.repo", destination: "/etc/yum.repos.d/kubernetes.repo"
+#config.vm.provision "file", source: "docker-ce.repo", destination: "/etc/yum.repos.d/docker-ce.repo"
+#config.vm.provision "file", source: "kubernetes.repo", destination: "/etc/yum.repos.d/kubernetes.repo"
 #Provision Master
  config.vm.define "kmaster" do |kmaster|
   kmaster.vm.box = "scottharwell/fedora-35-aarch64" 
