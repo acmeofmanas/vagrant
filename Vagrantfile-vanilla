@@ -17,35 +17,6 @@ end
      vb.memory = "1024"
    end
 
-#Provision standalone
- config.vm.define "standalone" do |standalone|
-  standalone.vm.box = "scottharwell/fedora-35-aarch64" 
-  standalone.vm.hostname = "standalone.example.com"
-  standalone.vm.network "private_network", ip:  "172.42.42.100"
-  standalone.vm.provision "shell", path: "bootstrap_kmaster.sh" 
-end
-   config.vm.provider "parallels" do |vb|
-     vb.name = "standalone"
-     vb.memory = "2048"
-     vb.cpus = "2"
-   end
-
-#Provision kmaster2
- config.vm.define "kmaster2" do |kmaster2|
-  kmaster2.vm.box = "scottharwell/fedora-35-aarch64" 
-  kmaster2.vm.hostname = "kmaster2.example.com"
-  kmaster2.vm.network "private_network", ip:  "172.42.42.101"
-  kmaster2.vm.provision "shell", path: "bootstrap_kmaster.sh" 
-end
-   config.vm.provider "parallels" do |vb|
-     vb.name = "kmaster2"
-     vb.memory = "2048"
-     vb.cpus = "2"
-   end
-
-#Provision Worker
-NodeCount = 3
-# Kubernetes Worker Nodes
 
 #Provision Worker
 NodeCount = 3
