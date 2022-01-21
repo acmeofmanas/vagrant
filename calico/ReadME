@@ -1,0 +1,5 @@
+Add all 4 images to private repo, 
+customize the yaml to point internal repor
+add autodetect ip to your k8 cluster network ip interface
+
+public repo yaml don't work, use the one in repo here-{calico-local.yaml} 
