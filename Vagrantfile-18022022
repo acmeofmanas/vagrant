@@ -16,7 +16,7 @@ end
    config.vm.provider "parallels" do |vb|
      vb.memory = "1024"
    end
-=begin
+
 #Provision standalone
  config.vm.define "standalone" do |standalone|
   standalone.vm.box = "scottharwell/fedora-35-aarch64" 
@@ -29,6 +29,7 @@ end
      vb.memory = "2048"
      vb.cpus = "2"
    end
+
 #Provision kmaster2
  config.vm.define "kmaster2" do |kmaster2|
   kmaster2.vm.box = "scottharwell/fedora-35-aarch64" 
@@ -42,7 +43,6 @@ end
      vb.cpus = "2"
    end
 
-=end
 #Provision Worker
 NodeCount = 3
 # Kubernetes Worker Nodes
