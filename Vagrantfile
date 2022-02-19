@@ -9,7 +9,7 @@ config.vm.provision "shell", path: "bootstrap.sh"
 #Provision Master
  config.vm.define "kmaster" do |kmaster|
   kmaster.vm.box = "scottharwell/fedora-35-aarch64" 
-  kmaster.vm.hostname = "kmaster.example.com"
+  kmaster.vm.hostname = "master.example.com"
   kmaster.vm.provision "shell", path: "bootstrap_kmaster.sh" 
 end
 
@@ -17,43 +17,18 @@ end
      vb.memory = "1024"
    end
 =begin
-#Provision standalone
- config.vm.define "standalone" do |standalone|
-  standalone.vm.box = "scottharwell/fedora-35-aarch64" 
-  standalone.vm.hostname = "standalone.example.com"
-  standalone.vm.network "private_network", ip:  "172.42.42.100"
-  standalone.vm.provision "shell", path: "bootstrap_kmaster.sh" 
-end
-   config.vm.provider "parallels" do |vb|
-     vb.name = "standalone"
-     vb.memory = "2048"
-     vb.cpus = "2"
-   end
-#Provision kmaster2
- config.vm.define "kmaster2" do |kmaster2|
-  kmaster2.vm.box = "scottharwell/fedora-35-aarch64" 
-  kmaster2.vm.hostname = "kmaster2.example.com"
-  kmaster2.vm.network "private_network", ip:  "172.42.42.101"
-  kmaster2.vm.provision "shell", path: "bootstrap_kmaster.sh" 
-end
-   config.vm.provider "parallels" do |vb|
-     vb.name = "kmaster2"
-     vb.memory = "2048"
-     vb.cpus = "2"
-   end
-
 =end
 #Provision Worker
-NodeCount = 3
+#NodeCount = 3
 # Kubernetes Worker Nodes
 
 #Provision Worker
-NodeCount = 3
+NodeCount = 2
 # Kubernetes Worker Nodes
   (1..NodeCount).each do |i|
     config.vm.define "kworker#{i}" do |workernode|
       workernode.vm.box = "scottharwell/fedora-35-aarch64"
-      workernode.vm.hostname = "kworker#{i}.example.com"
+      workernode.vm.hostname = "worker#{i}.example.com"
       workernode.vm.provision "shell", path: "bootstrap_kworker.sh"
 	end
   end
